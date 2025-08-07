@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Dimensions, Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { loadAppData, type Profile, type BadgeType, type AchievementType } from '../../utils/dataLoader';
+import { loadAppData, type Profile, type BadgeType, type AchievementType, type Achievement } from '../../utils/dataLoader';
 
 const { width } = Dimensions.get('window');
 
@@ -15,13 +15,13 @@ const badgeIcons: Record<BadgeType, string> = {
 };
 
 const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBadges: Record<AchievementType, BadgeType> }) => {
-  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
   const avatarSize = width * 0.6;
   const badgeRadius = avatarSize * 0.5; // Distance from center of avatar
   const badgeSize = 40;
   
-  const handleBadgePress = (achievement: AchievementType) => {
-    setSelectedTopic(achievement);
+  const handleBadgePress = (achievement: Achievement) => {
+    setSelectedAchievement(achievement);
   };
   
   return (
@@ -29,8 +29,8 @@ const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBad
       <View style={styles.avatarContainer}>
         <Image source={{ uri: profile.image }} style={styles.avatar} />
         <View style={styles.badgeOverlay}>
-          {profile.achievements.map((achievement: AchievementType, index: number) => {
-            const badge = achievementBadges[achievement];
+          {profile.achievements.map((achievement: Achievement, index: number) => {
+            const badge = achievementBadges[achievement.name];
             const angle = (index * 180) / (profile.achievements.length - 1) - 90; // -90 to start from top
             const x = Math.cos((angle * Math.PI) / 180) * badgeRadius;
             const y = Math.sin((angle * Math.PI) / 180) * badgeRadius;
@@ -63,8 +63,11 @@ const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBad
         </View>
       </View>
       <Text style={styles.name}>{profile.name}</Text>
-      {selectedTopic && (
-        <Text style={styles.topic}>{selectedTopic}</Text>
+      {selectedAchievement && (
+        <View style={styles.achievementInfo}>
+          <Text style={styles.achievementName}>{selectedAchievement.name}</Text>
+          <Text style={styles.achievementDescription}>{selectedAchievement.description}</Text>
+        </View>
       )}
     </View>
   );
@@ -153,6 +156,24 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginTop: 10,
     opacity: 0.8,
+  },
+  achievementInfo: {
+    marginTop: 15,
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  achievementName: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  achievementDescription: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 22,
+    opacity: 0.9,
   },
   loading: {
     color: '#fff',

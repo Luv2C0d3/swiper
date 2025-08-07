@@ -1,50 +1,118 @@
-# Welcome to your Expo app 👋
+# Swipeable Profiles App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A professional React Native app for browsing user profiles with detailed achievement information.
 
-## Get started
+## 🏗️ Project Structure
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+swipeable-profiles/
+├── app/                          # Expo Router app directory
+│   ├── (tabs)/                   # Tab navigation
+│   │   └── index.tsx            # Main home screen
+├── components/                   # Reusable UI components
+│   ├── Card.tsx                 # Profile card component
+│   ├── AchievementDetailsView.tsx # Achievement details display
+│   ├── NavigationBar.tsx        # Bottom navigation
+│   ├── LoadingView.tsx          # Loading and error states
+│   └── index.ts                 # Component exports
+├── constants/                   # App constants
+│   └── badgeIcons.ts           # Badge icon mappings
+├── src/                        # Source code
+│   ├── hooks/                  # Custom React hooks
+│   │   └── useProfiles.ts      # Profile data hook
+│   └── repositories/           # Data layer
+│       └── ProfileRepository.ts # YAML data loading
+├── utils/                      # Utility functions
+│   ├── dataLoader.ts           # Data loading utilities
+│   └── gradeFetchers.ts        # Grade fetching logic
+└── assets/                     # Static assets
+    └── data/
+        └── profiles.yaml       # Profile data
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🚀 Features
 
-## Learn more
+- **Profile Browsing**: Navigate through user profiles with Previous/Next buttons
+- **Achievement Details**: Tap badges to view detailed information
+- **Rich Data Display**: Education, publications, YouTube channels, championships, projects, performances
+- **Professional UI**: Clean, modern interface with proper loading states
+- **TypeScript**: Fully typed for better development experience
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🧩 Components
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Card
+- Displays user profile with avatar and achievement badges
+- Handles badge interactions and grade fetching
+- Shows achievement details when badges are tapped
 
-## Join the community
+### AchievementDetailsView
+- Scrollable view of achievement details
+- Displays education, publications, YouTube channels, etc.
+- Organized sections with emoji icons
 
-Join our community of developers creating universal apps.
+### NavigationBar
+- Bottom navigation with Previous/Next buttons
+- Shows current position (e.g., "2 / 3")
+- Clean, accessible design
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### LoadingView
+- Handles loading and error states
+- Provides consistent user feedback
+
+## 📊 Data Structure
+
+Profiles are loaded from `assets/data/profiles.yaml` with the following structure:
+
+```yaml
+profiles:
+  - id: '1'
+    name: 'User Name'
+    image: 'profile-image-url'
+    achievements:
+      - name: 'economy'
+        grade: 7
+        description: 'Achievement description'
+        details:
+          diploma: [...]
+          publications: [...]
+          youtube_channel: [...]
+          championships: [...]
+          projects: [...]
+          performances: [...]
+```
+
+## 🛠️ Development
+
+### Prerequisites
+- Node.js
+- Expo CLI
+- React Native development environment
+
+### Setup
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start the development server: `npm start`
+
+### Key Technologies
+- **React Native**: Cross-platform mobile development
+- **Expo**: Development platform and tools
+- **TypeScript**: Type safety and better DX
+- **YAML**: Data storage format
+- **React Hooks**: State management
+
+## 🎨 Design Principles
+
+- **Component Separation**: Each component has a single responsibility
+- **Type Safety**: Full TypeScript coverage
+- **Clean Architecture**: Separation of concerns between UI, data, and business logic
+- **Reusability**: Components are designed to be reusable
+- **Accessibility**: Proper touch targets and navigation
+
+## 📱 Usage
+
+1. **Browse Profiles**: Use Previous/Next buttons to navigate
+2. **View Details**: Tap on achievement badges (⭐🏆🍃🔥💎)
+3. **Scroll Content**: Scroll through detailed achievement information
+4. **Navigate**: Use bottom navigation for profile switching
+
+This app demonstrates professional React Native development practices with clean architecture, proper component separation, and a maintainable codebase.

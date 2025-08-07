@@ -1,75 +1,99 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import Swiper from 'react-native-deck-swiper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const { width } = Dimensions.get('window');
+
+const profiles = [
+  {
+    id: '1',
+    name: 'Sophia Chen',
+    image: { uri: 'https://randomuser.me/api/portraits/women/44.jpg' },
+    badges: ['star', 'trophy', 'leaf', 'fire', 'gem'],
+  },
+  {
+    id: '2',
+    name: 'Liam Zhang',
+    image: { uri: 'https://randomuser.me/api/portraits/men/33.jpg' },
+    badges: ['star', 'fire', 'leaf'],
+  },
+  {
+    id: '3',
+    name: 'Ava Kumar',
+    image: { uri: 'https://randomuser.me/api/portraits/women/68.jpg' },
+    badges: ['trophy', 'gem', 'fire', 'leaf'],
+  },
+];
+
+const badgeIcons = {
+  star: '⭐',
+  trophy: '🏆',
+  leaf: '🍃',
+  fire: '🔥',
+  gem: '💎',
+};
+
+const Card = ({ profile }: { profile: typeof profiles[0] }) => (
+  <View style={styles.card}>
+    <Image source={profile.image} style={styles.avatar} />
+    <View style={styles.badgeContainer}>
+      {profile.badges.map((badge, index) => (
+        <Text key={index} style={styles.badge}>{badgeIcons[badge]}</Text>
+      ))}
+    </View>
+    <Text style={styles.name}>{profile.name}</Text>
+  </View>
+);
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.container}>
+      <Swiper
+        cards={profiles}
+        renderCard={(card) => <Card profile={card} />}
+        stackSize={3}
+        backgroundColor={'#1a1a1a'}
+        cardVerticalMargin={60}
+        cardHorizontalMargin={10}
+        stackSeparation={15}
+        infinite
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    backgroundColor: '#1a1a1a',
+  },
+  card: {
+    backgroundColor: '#2a2a2a',
+    borderRadius: 20,
+    padding: 20,
     alignItems: 'center',
-    gap: 8,
+    height: '75%',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  avatar: {
+    width: width * 0.6,
+    height: width * 0.6,
+    borderRadius: width * 0.3,
+    marginBottom: 20,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  badgeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginBottom: 10,
+  },
+  badge: {
+    fontSize: 24,
+    margin: 4,
+  },
+  name: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
 });

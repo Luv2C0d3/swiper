@@ -31,11 +31,62 @@ profiles:
           Sophia demonstrou habilidades excepcionais em gestão financeira e análise econômica.
           Ela gerenciou com sucesso diversos portfólios de investimento e forneceu orientação
           financeira estratégica para startups.
+        details:
+          - diploma: yes
+            institution: 'University of Economics'
+            year: 2020
+            degree: 'Bachelor of Economics'
+            major: 'Economics'
+            gpa: 3.8
+            honors: 'Summa Cum Laude'
+            awards: "Dean's List"
+          - postgraduate:
+            - diploma: yes
+              institution: 'University of Economics'
+              year: 2022
+              degree: 'Master of Economics'
+              major: 'Economics'
+              gpa: 3.9
+          - publications:
+            - title: 'The Impact of Economic Policies on Small Business Growth'
+              journal: 'Journal of Economics'
+              year: 2021
+              volume: 10
+              issue: 2
+              pages: 100-110
+            - title: 'The Role of Monetary Policy in Economic Stability'
+              journal: 'Journal of Economics'
+              year: 2022
+              volume: 11
+              issue: 3
+              pages: 150-160
+          - youtube_channel:
+            - name: 'Economics Insights'
+              url: 'https://www.youtube.com/channel/UC_x-k8WMrzUX1LfO5B_W3mg'
+              description: 'A channel that provides insights on economic policies and trends.'
+            - name: 'Financial Markets'
+              url: 'https://www.youtube.com/channel/UC_x-k8WMrzUX1LfO5B_W3mg'
+              description: 'A channel that provides insights on financial markets and investments.'
+            - name: 'Economic Policy'
       - name: sports
         grade: 8
         description: >
           Sophia é uma atleta talentosa que competiu em nível regional na natação.
           Ela mantém um estilo de vida ativo e gosta de treinar equipes esportivas juvenis.
+        details:
+          - diploma: yes
+            institution: 'University of Sports'
+            year: 2020
+            degree: 'Bachelor of Sports'
+            major: 'Sports'
+            gpa: 3.8
+          - championships:
+            - name: 'Regional Swimming Championships'
+              year: 2021
+              position: '1st place'
+              description: 'Competed in the 100m freestyle and 200m butterfly events.'
+            - name: 'National Swimming Championships'
+              year: 2022
       - name: gardening
         grade: 6
         description: >
@@ -61,41 +112,237 @@ profiles:
         description: >
           Liam tem uma sólida formação em economia e trabalhou como analista financeiro
           para grandes corporações, especializando-se em tendências de mercado e estratégias de investimento.
-      - name: marketing
-        grade: 9
+        details:
+          - diploma: yes
+            institution: 'Stanford University'
+            year: 2019
+            degree: 'Bachelor of Economics'
+            major: 'Economics'
+            gpa: 3.7
+            honors: 'Magna Cum Laude'
+            awards: "Dean's List"
+          - postgraduate:
+            - diploma: yes
+              institution: 'Harvard Business School'
+              year: 2021
+              degree: 'Master of Business Administration'
+              major: 'Finance'
+              gpa: 3.8
+          - publications:
+            - title: 'Digital Transformation in Financial Services'
+              journal: 'Harvard Business Review'
+              year: 2021
+              volume: 15
+              issue: 4
+              pages: 45-52
+            - title: 'Cryptocurrency Markets and Traditional Finance'
+              journal: 'Journal of Financial Economics'
+              year: 2022
+              volume: 12
+              issue: 1
+              pages: 78-89
+          - youtube_channel:
+            - name: 'Finance Forward'
+              url: 'https://www.youtube.com/channel/UC_finance_forward'
+              description: 'Insights on modern finance, cryptocurrency, and investment strategies.'
+            - name: 'Tech Economics'
+              url: 'https://www.youtube.com/channel/UC_tech_economics'
+              description: 'Exploring the intersection of technology and economics.'
+      - name: sports
+        grade: 6
         description: >
-          Liam se destaca em marketing digital e ajudou diversas empresas a aumentarem
-          sua presença online e o engajamento dos clientes por meio de campanhas baseadas em dados.
+          Liam é um corredor recreativo que participa de meias maratonas e mantém
+          uma rotina de exercícios consistente. Ele também pratica tênis nos fins de semana.
+        details:
+          - championships:
+            - name: 'City Half Marathon'
+              year: 2022
+              position: '15th place'
+              description: 'Completed in 1:45:30, personal best time.'
+            - name: 'Corporate Tennis Tournament'
+              year: 2021
+              position: '2nd place'
+              description: 'Doubles tournament with colleague.'
       - name: gardening
         grade: 5
         description: >
           Liam gosta de jardinagem urbana e transformou a varanda de seu apartamento
           em um mini-jardim vibrante com ervas, flores e pequenos vegetais.
+        details:
+          - projects:
+            - name: 'Balcony Garden Project'
+              year: 2022
+              description: 'Created a sustainable urban garden with herbs, flowers, and vegetables.'
+            - name: 'Community Garden Initiative'
+              year: 2021
+              description: 'Helped establish a community garden in the neighborhood.'
+      - name: marketing
+        grade: 9
+        description: >
+          Liam se destaca em marketing digital e ajudou diversas empresas a aumentarem
+          sua presença online e o engajamento dos clientes por meio de campanhas baseadas em dados.
+        details:
+          - diploma: yes
+            institution: 'MIT Sloan School of Management'
+            year: 2021
+            degree: 'Certificate in Digital Marketing'
+            major: 'Marketing Analytics'
+            gpa: 3.9
+          - publications:
+            - title: 'AI-Powered Marketing Strategies'
+              journal: 'Marketing Science'
+              year: 2022
+              volume: 8
+              issue: 2
+              pages: 120-135
+            - title: 'Social Media ROI Measurement'
+              journal: 'Digital Marketing Quarterly'
+              year: 2021
+              volume: 6
+              issue: 3
+              pages: 45-58
+          - youtube_channel:
+            - name: 'Digital Marketing Insights'
+              url: 'https://www.youtube.com/channel/UC_digital_marketing'
+              description: 'Latest trends in digital marketing and analytics.'
+            - name: 'Tech Marketing'
+              url: 'https://www.youtube.com/channel/UC_tech_marketing'
+              description: 'Marketing strategies for technology companies.'
+      - name: arts
+        grade: 4
+        description: >
+          Liam tem interesse em fotografia urbana e documenta a vida da cidade
+          através de suas lentes. Ele também gosta de visitar museus e galerias de arte.
 
   - id: '3'
     name: 'Ava Kumar'
     image: 'https://randomuser.me/api/portraits/women/68.jpg'
     achievements:
+      - name: economy
+        grade: 6
+        description: >
+          Ava tem conhecimento básico de economia pessoal e investimentos.
+          Ela gerencia seu próprio portfólio de investimentos e segue tendências de mercado.
+        details:
+          - diploma: yes
+            institution: 'University of California, Berkeley'
+            year: 2020
+            degree: 'Bachelor of Arts'
+            major: 'Economics'
+            gpa: 3.6
+          - publications:
+            - title: 'Personal Finance for Young Professionals'
+              journal: 'Financial Planning Today'
+              year: 2021
+              volume: 5
+              issue: 1
+              pages: 25-30
       - name: sports
         grade: 9
         description: >
           Ava é uma corredora dedicada e instrutora de yoga. Ela completou diversas
           maratonas e ajuda outras pessoas a atingirem seus objetivos de fitness com treinamentos personalizados.
+        details:
+          - diploma: yes
+            institution: 'Yoga Alliance'
+            year: 2021
+            degree: 'Yoga Teacher Certification'
+            major: 'Vinyasa Flow'
+            honors: 'Distinguished Graduate'
+          - championships:
+            - name: 'Boston Marathon'
+              year: 2022
+              position: 'Top 10%'
+              description: "Completed in 3:15:45, qualified for next year's race."
+            - name: 'New York City Marathon'
+              year: 2021
+              position: 'Top 15%'
+              description: 'First marathon completion, time: 3:45:20.'
+            - name: 'Regional Yoga Competition'
+              year: 2022
+              position: '1st place'
+              description: 'Advanced category, demonstrating complex asanas and meditation.'
+          - youtube_channel:
+            - name: 'Yoga with Ava'
+              url: 'https://www.youtube.com/channel/UC_yoga_with_ava'
+              description: 'Daily yoga practices, meditation guides, and wellness tips.'
+            - name: 'Running Journey'
+              url: 'https://www.youtube.com/channel/UC_running_journey'
+              description: 'Marathon training tips, running form, and race preparation.'
       - name: arts
         grade: 8
         description: >
           Ava é uma musicista habilidosa que toca vários instrumentos e compõe suas próprias músicas.
           Ela se apresenta regularmente em locais locais e ensina música para crianças.
+        details:
+          - diploma: yes
+            institution: 'Berklee College of Music'
+            year: 2019
+            degree: 'Bachelor of Music'
+            major: 'Music Performance'
+            gpa: 3.8
+            honors: 'Cum Laude'
+          - publications:
+            - title: 'Fusion of Classical and Contemporary Music'
+              journal: 'Music Theory Today'
+              year: 2021
+              volume: 7
+              issue: 2
+              pages: 88-95
+          - youtube_channel:
+            - name: "Ava's Music Corner"
+              url: 'https://www.youtube.com/channel/UC_ava_music'
+              description: 'Original compositions, covers, and music tutorials.'
+            - name: 'Classical Guitar Lessons'
+              url: 'https://www.youtube.com/channel/UC_classical_guitar'
+              description: 'Step-by-step guitar lessons for beginners and intermediate players.'
+          - performances:
+            - name: 'Local Jazz Festival'
+              year: 2022
+              description: 'Performed original compositions with jazz quartet.'
+            - name: 'Community Concert Series'
+              year: 2021
+              description: 'Monthly performances at local community center.'
       - name: marketing
         grade: 7
         description: >
           Ava é especializada em marketing de mídia social e criação de conteúdo. Ela construiu
           comunidades online sólidas e ajudou marcas a se conectarem de forma autêntica com seu público.
+        details:
+          - diploma: yes
+            institution: 'New York University'
+            year: 2020
+            degree: 'Certificate in Social Media Marketing'
+            major: 'Digital Marketing'
+            gpa: 3.7
+          - publications:
+            - title: 'Building Authentic Brand Communities'
+              journal: 'Social Media Marketing Review'
+              year: 2022
+              volume: 4
+              issue: 1
+              pages: 15-22
+          - youtube_channel:
+            - name: 'Social Media Tips'
+              url: 'https://www.youtube.com/channel/UC_social_media_tips'
+              description: 'Social media strategy and content creation advice.'
       - name: gardening
         grade: 6
         description: >
           Ava pratica técnicas de jardinagem sustentável e foca em plantas nativas
           que apoiam os ecossistemas locais e a vida selvagem.
+        details:
+          - projects:
+            - name: 'Native Plant Garden'
+              year: 2022
+              description: 'Created a garden with 100% native plants to support local wildlife.'
+            - name: 'Community Pollinator Garden'
+              year: 2021
+              description: 'Established a garden specifically designed to attract and support pollinators.'
+          - youtube_channel:
+            - name: 'Sustainable Gardening'
+              url: 'https://www.youtube.com/channel/UC_sustainable_gardening'
+              description: 'Tips for eco-friendly gardening and native plant cultivation.'
 
 achievement_badges:
   economy: star

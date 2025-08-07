@@ -1,8 +1,8 @@
-import { ProfileRepository, type AppData, type Profile, type BadgeType, type AchievementType, type Achievement } from '../src/repositories/ProfileRepository';
+import { ProfileRepository, type Achievement, type AchievementDetails, type AchievementType, type AppData, type BadgeType, type Championship, type Diploma, type Performance, type Profile, type Project, type Publication, type YouTubeChannel } from '../src/repositories/ProfileRepository';
 
 const profileRepository = new ProfileRepository();
 
-export { type BadgeType, type AchievementType, type Achievement, type Profile, type AppData };
+export { type Achievement, type AchievementDetails, type AchievementType, type AppData, type BadgeType, type Championship, type Diploma, type Performance, type Profile, type Project, type Publication, type YouTubeChannel };
 
 export const loadAppData = async (): Promise<AppData> => {
   try {

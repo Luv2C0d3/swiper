@@ -1,0 +1,34 @@
+profiles:
+  - id: '1'
+    name: 'Sophia Chen'
+    image: 'https://randomuser.me/api/portraits/women/44.jpg'
+    achievements:
+      - economy
+      - sports
+      - gardening
+      - marketing
+      - arts
+
+  - id: '2'
+    name: 'Liam Zhang'
+    image: 'https://randomuser.me/api/portraits/men/33.jpg'
+    achievements:
+      - economy
+      - marketing
+      - gardening
+
+  - id: '3'
+    name: 'Ava Kumar'
+    image: 'https://randomuser.me/api/portraits/women/68.jpg'
+    achievements:
+      - sports
+      - arts
+      - marketing
+      - gardening
+
+achievement_badges:
+  economy: star
+  sports: trophy
+  gardening: leaf
+  marketing: fire
+  arts: gem

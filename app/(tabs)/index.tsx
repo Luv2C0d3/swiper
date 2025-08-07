@@ -1,32 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dimensions, Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { loadAppData, type Profile, type BadgeType, type AchievementType } from '../../utils/dataLoader';
 
 const { width } = Dimensions.get('window');
-
-type BadgeType = 'star' | 'trophy' | 'leaf' | 'fire' | 'gem';
-
-const profiles = [
-  {
-    id: '1',
-    name: 'Sophia Chen',
-    image: { uri: 'https://randomuser.me/api/portraits/women/44.jpg' },
-    badges: ['star', 'trophy', 'leaf', 'fire', 'gem'] as BadgeType[],
-  },
-  {
-    id: '2',
-    name: 'Liam Zhang',
-    image: { uri: 'https://randomuser.me/api/portraits/men/33.jpg' },
-    badges: ['star', 'fire', 'leaf'] as BadgeType[],
-  },
-  {
-    id: '3',
-    name: 'Ava Kumar',
-    image: { uri: 'https://randomuser.me/api/portraits/women/68.jpg' },
-    badges: ['trophy', 'gem', 'fire', 'leaf'] as BadgeType[],
-  },
-];
 
 const badgeIcons: Record<BadgeType, string> = {
   star: '⭐',
@@ -36,31 +14,24 @@ const badgeIcons: Record<BadgeType, string> = {
   gem: '💎',
 };
 
-const badgeTopics: Record<BadgeType, string> = {
-  star: 'economy',
-  trophy: 'sports',
-  leaf: 'gardening',
-  fire: 'marketing',
-  gem: 'arts',
-};
-
-const Card = ({ profile }: { profile: typeof profiles[0] }) => {
+const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBadges: Record<AchievementType, BadgeType> }) => {
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const avatarSize = width * 0.6;
   const badgeRadius = avatarSize * 0.5; // Distance from center of avatar
   const badgeSize = 40;
   
-  const handleBadgePress = (badge: BadgeType) => {
-    setSelectedTopic(badgeTopics[badge]);
+  const handleBadgePress = (achievement: AchievementType) => {
+    setSelectedTopic(achievement);
   };
   
   return (
     <View style={styles.card}>
       <View style={styles.avatarContainer}>
-        <Image source={profile.image} style={styles.avatar} />
+        <Image source={{ uri: profile.image }} style={styles.avatar} />
         <View style={styles.badgeOverlay}>
-          {profile.badges.map((badge, index) => {
-            const angle = (index * 180) / (profile.badges.length - 1) - 90; // -90 to start from top
+          {profile.achievements.map((achievement: AchievementType, index: number) => {
+            const badge = achievementBadges[achievement];
+            const angle = (index * 180) / (profile.achievements.length - 1) - 90; // -90 to start from top
             const x = Math.cos((angle * Math.PI) / 180) * badgeRadius;
             const y = Math.sin((angle * Math.PI) / 180) * badgeRadius;
             
@@ -83,7 +54,7 @@ const Card = ({ profile }: { profile: typeof profiles[0] }) => {
                     borderColor: '#fff',
                   },
                 ]}
-                onPress={() => handleBadgePress(badge)}
+                onPress={() => handleBadgePress(achievement)}
               >
                 <Text style={styles.badgeText}>{badgeIcons[badge]}</Text>
               </TouchableOpacity>
@@ -100,11 +71,26 @@ const Card = ({ profile }: { profile: typeof profiles[0] }) => {
 };
 
 export default function HomeScreen() {
+  const [appData, setAppData] = useState<{ profiles: Profile[]; achievement_badges: Record<AchievementType, BadgeType> } | null>(null);
+
+  useEffect(() => {
+    const data = loadAppData();
+    setAppData(data);
+  }, []);
+
+  if (!appData) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.loading}>Loading profiles...</Text>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Swiper
-        cards={profiles}
-        renderCard={(card) => <Card profile={card} />}
+        cards={appData.profiles}
+        renderCard={(card) => <Card profile={card} achievementBadges={appData.achievement_badges} />}
         stackSize={3}
         backgroundColor={'#1a1a1a'}
         cardVerticalMargin={60}
@@ -167,5 +153,11 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginTop: 10,
     opacity: 0.8,
+  },
+  loading: {
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 50,
   },
 });

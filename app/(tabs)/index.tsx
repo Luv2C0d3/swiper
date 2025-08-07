@@ -3,6 +3,7 @@ import { Dimensions, Image, StyleSheet, Text, View, TouchableOpacity } from 'rea
 import Swiper from 'react-native-deck-swiper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { loadAppData, type Profile, type BadgeType, type AchievementType, type Achievement } from '../../utils/dataLoader';
+import { gradeFetchers, type GradeFetchResult } from '../../utils/gradeFetchers';
 
 const { width } = Dimensions.get('window');
 
@@ -16,12 +17,30 @@ const badgeIcons: Record<BadgeType, string> = {
 
 const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBadges: Record<AchievementType, BadgeType> }) => {
   const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
+  const [fetchingMessage, setFetchingMessage] = useState<string | null>(null);
   const avatarSize = width * 0.6;
   const badgeRadius = avatarSize * 0.5; // Distance from center of avatar
   const badgeSize = 40;
   
-  const handleBadgePress = (achievement: Achievement) => {
+  const handleBadgePress = async (achievement: Achievement) => {
     setSelectedAchievement(achievement);
+    
+    // Call the appropriate grade fetching function
+    try {
+      const fetcher = gradeFetchers[achievement.name];
+      if (fetcher) {
+        const result: GradeFetchResult = await fetcher(profile.id);
+        setFetchingMessage(result.message);
+      }
+    } catch (error) {
+      console.error('Error fetching grade:', error);
+      setFetchingMessage(`Error fetching ${achievement.name} grade`);
+    }
+    
+    // Clear fetching message after a short delay
+    setTimeout(() => {
+      setFetchingMessage(null);
+    }, 3000);
   };
   
   return (
@@ -68,6 +87,9 @@ const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBad
           <Text style={styles.achievementName}>{selectedAchievement.name}</Text>
           <Text style={styles.achievementDescription}>{selectedAchievement.description}</Text>
         </View>
+      )}
+      {fetchingMessage && (
+        <Text style={styles.fetchingMessage}>{fetchingMessage}</Text>
       )}
     </View>
   );
@@ -174,6 +196,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 22,
     opacity: 0.9,
+  },
+  fetchingMessage: {
+    color: '#FFD700',
+    fontSize: 14,
+    textAlign: 'center',
+    marginTop: 10,
+    paddingHorizontal: 20,
+    opacity: 1,
+    fontStyle: 'italic',
+    fontWeight: 'bold',
   },
   loading: {
     color: '#fff',

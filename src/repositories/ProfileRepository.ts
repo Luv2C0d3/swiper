@@ -1,3 +1,40 @@
+import yaml from 'js-yaml';
+import { Asset } from 'expo-asset';
+
+export type BadgeType = 'star' | 'trophy' | 'leaf' | 'fire' | 'gem';
+export type AchievementType = 'economy' | 'sports' | 'gardening' | 'marketing' | 'arts';
+
+export interface GradeFetchingMethod {
+  name: AchievementType;
+  method: string;
+  args: string[];
+}
+
+export interface Achievement {
+  name: AchievementType;
+  grade?: number;
+  description: string;
+}
+
+export interface Profile {
+  id: string;
+  name: string;
+  image: string;
+  achievements: Achievement[];
+}
+
+export interface AppData {
+  grade_fetching_methods: GradeFetchingMethod[];
+  profiles: Profile[];
+  achievement_badges: Record<AchievementType, BadgeType>;
+}
+
+export class ProfileRepository {
+  async fetchAppData(): Promise<AppData | null> {
+    try {
+      // For now, we'll use the hardcoded data but in a more maintainable way
+      // In a real app, you could use Expo's asset system or fetch from a remote API
+      const yamlData = `
 grade_fetching_methods:
   - name: economy
     method: fetchEconomyGrade
@@ -103,3 +140,55 @@ achievement_badges:
   gardening: leaf
   marketing: fire
   arts: gem
+`;
+
+      const parsed = yaml.load(yamlData) as AppData;
+      return parsed;
+    } catch (err) {
+      console.error('Error reading YAML data:', err);
+      return null;
+    }
+  }
+
+  async fetchAllProfiles(): Promise<Profile[]> {
+    try {
+      const data = await this.fetchAppData();
+      return data?.profiles || [];
+    } catch (err) {
+      console.error('Error reading YAML data:', err);
+      return [];
+    }
+  }
+
+  async fetchGradeFetchingMethods(): Promise<GradeFetchingMethod[]> {
+    try {
+      const data = await this.fetchAppData();
+      return data?.grade_fetching_methods || [];
+    } catch (err) {
+      console.error('Error reading YAML data:', err);
+      return [];
+    }
+  }
+
+  async fetchAchievementBadges(): Promise<Record<AchievementType, BadgeType>> {
+    try {
+      const data = await this.fetchAppData();
+      return data?.achievement_badges || {
+        economy: 'star',
+        sports: 'trophy',
+        gardening: 'leaf',
+        marketing: 'fire',
+        arts: 'gem',
+      };
+    } catch (err) {
+      console.error('Error reading YAML data:', err);
+      return {
+        economy: 'star',
+        sports: 'trophy',
+        gardening: 'leaf',
+        marketing: 'fire',
+        arts: 'gem',
+      };
+    }
+  }
+}

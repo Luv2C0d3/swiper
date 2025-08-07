@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Dimensions, Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { loadAppData, type Profile, type BadgeType, type AchievementType, type Achievement } from '../../utils/dataLoader';
+import { type Profile, type BadgeType, type AchievementType, type Achievement } from '../../utils/dataLoader';
 import { gradeFetchers, type GradeFetchResult } from '../../utils/gradeFetchers';
+import { useProfiles } from '../../src/hooks/useProfiles';
 
 const { width } = Dimensions.get('window');
 
@@ -96,14 +97,9 @@ const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBad
 };
 
 export default function HomeScreen() {
-  const [appData, setAppData] = useState<{ profiles: Profile[]; achievement_badges: Record<AchievementType, BadgeType> } | null>(null);
+  const { profiles, achievementBadges, loading, error } = useProfiles();
 
-  useEffect(() => {
-    const data = loadAppData();
-    setAppData(data);
-  }, []);
-
-  if (!appData) {
+  if (loading) {
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.loading}>Loading profiles...</Text>
@@ -111,11 +107,27 @@ export default function HomeScreen() {
     );
   }
 
+  if (error) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.error}>{error}</Text>
+      </SafeAreaView>
+    );
+  }
+
+  if (profiles.length === 0) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.error}>No profiles available</Text>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Swiper
-        cards={appData.profiles}
-        renderCard={(card) => <Card profile={card} achievementBadges={appData.achievement_badges} />}
+        cards={profiles}
+        renderCard={(card) => <Card profile={card} achievementBadges={achievementBadges} />}
         stackSize={3}
         backgroundColor={'#1a1a1a'}
         cardVerticalMargin={60}
@@ -209,6 +221,12 @@ const styles = StyleSheet.create({
   },
   loading: {
     color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 50,
+  },
+  error: {
+    color: '#ff6b6b',
     fontSize: 18,
     textAlign: 'center',
     marginTop: 50,

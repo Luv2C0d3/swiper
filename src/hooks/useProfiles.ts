@@ -18,17 +18,6 @@ export const useProfiles = () => {
       try {
         setLoading(true);
         const data = await loadAppData();
-        
-        // Debug: Log the loaded data
-        console.log('=== useProfiles Debug ===');
-        console.log('Loaded profiles count:', data.profiles.length);
-        console.log('First profile achievements:', data.profiles[0]?.achievements.map(a => ({
-          name: a.name,
-          hasDetails: !!a.details,
-          detailsKeys: a.details ? Object.keys(a.details) : []
-        })));
-        console.log('=== End Debug ===');
-        
         setProfiles(data.profiles);
         setAchievementBadges(data.achievement_badges);
         setError(null);

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Swiper from 'react-native-deck-swiper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useProfiles } from '../../src/hooks/useProfiles';
 import { type Achievement, type AchievementDetails, type AchievementType, type BadgeType, type Profile } from '../../utils/dataLoader';
@@ -17,114 +16,107 @@ const badgeIcons: Record<BadgeType, string> = {
 };
 
 const AchievementDetailsView = ({ details }: { details: AchievementDetails }) => {
-  console.log('AchievementDetailsView called with details:', details);
-  
-  // Add a visible test indicator
+  if (!details) return null;
+
   return (
     <View style={styles.detailsContainer}>
-      <Text style={styles.sectionTitle}>🔍 DEBUG: AchievementDetailsView is rendering!</Text>
-      <Text style={styles.detailText}>Details object: {JSON.stringify(details, null, 2)}</Text>
-      
-      {!details && (
-        <Text style={styles.detailText}>No details provided</Text>
-      )}
-      
-      {details && (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {details.diploma && details.diploma.length > 0 && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>🎓 Education</Text>
-              {details.diploma.map((diploma, index) => (
-                <View key={index} style={styles.detailItem}>
-                  <Text style={styles.detailTitle}>{diploma.degree}</Text>
-                  <Text style={styles.detailText}>{diploma.institution} ({diploma.year})</Text>
-                  <Text style={styles.detailText}>Major: {diploma.major}</Text>
-                  <Text style={styles.detailText}>GPA: {diploma.gpa}</Text>
-                  {diploma.honors && <Text style={styles.detailText}>Honors: {diploma.honors}</Text>}
-                  {diploma.awards && <Text style={styles.detailText}>Awards: {diploma.awards}</Text>}
-                </View>
-              ))}
-            </View>
-          )}
+      <ScrollView 
+        style={{ maxHeight: 200 }}
+        showsVerticalScrollIndicator={true}
+      >
+        {details.diploma && details.diploma.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🎓 Education</Text>
+            {details.diploma.map((diploma, index) => (
+              <View key={index} style={styles.detailItem}>
+                <Text style={styles.detailTitle}>{diploma.degree}</Text>
+                <Text style={styles.detailText}>{diploma.institution} ({diploma.year})</Text>
+                <Text style={styles.detailText}>Major: {diploma.major}</Text>
+                <Text style={styles.detailText}>GPA: {diploma.gpa}</Text>
+                {diploma.honors && <Text style={styles.detailText}>Honors: {diploma.honors}</Text>}
+                {diploma.awards && <Text style={styles.detailText}>Awards: {diploma.awards}</Text>}
+              </View>
+            ))}
+          </View>
+        )}
 
-          {details.postgraduate && details.postgraduate.length > 0 && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>🎓 Postgraduate Education</Text>
-              {details.postgraduate.map((diploma, index) => (
-                <View key={index} style={styles.detailItem}>
-                  <Text style={styles.detailTitle}>{diploma.degree}</Text>
-                  <Text style={styles.detailText}>{diploma.institution} ({diploma.year})</Text>
-                  <Text style={styles.detailText}>Major: {diploma.major}</Text>
-                  <Text style={styles.detailText}>GPA: {diploma.gpa}</Text>
-                  {diploma.honors && <Text style={styles.detailText}>Honors: {diploma.honors}</Text>}
-                </View>
-              ))}
-            </View>
-          )}
+        {details.postgraduate && details.postgraduate.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🎓 Postgraduate Education</Text>
+            {details.postgraduate.map((diploma, index) => (
+              <View key={index} style={styles.detailItem}>
+                <Text style={styles.detailTitle}>{diploma.degree}</Text>
+                <Text style={styles.detailText}>{diploma.institution} ({diploma.year})</Text>
+                <Text style={styles.detailText}>Major: {diploma.major}</Text>
+                <Text style={styles.detailText}>GPA: {diploma.gpa}</Text>
+                {diploma.honors && <Text style={styles.detailText}>Honors: {diploma.honors}</Text>}
+              </View>
+            ))}
+          </View>
+        )}
 
-          {details.publications && details.publications.length > 0 && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>📚 Publications</Text>
-              {details.publications.map((pub, index) => (
-                <View key={index} style={styles.detailItem}>
-                  <Text style={styles.detailTitle}>{pub.title}</Text>
-                  <Text style={styles.detailText}>{pub.journal} ({pub.year})</Text>
-                  <Text style={styles.detailText}>Vol. {pub.volume}, Issue {pub.issue}, pp. {pub.pages}</Text>
-                </View>
-              ))}
-            </View>
-          )}
+        {details.publications && details.publications.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>📚 Publications</Text>
+            {details.publications.map((pub, index) => (
+              <View key={index} style={styles.detailItem}>
+                <Text style={styles.detailTitle}>{pub.title}</Text>
+                <Text style={styles.detailText}>{pub.journal} ({pub.year})</Text>
+                <Text style={styles.detailText}>Vol. {pub.volume}, Issue {pub.issue}, pp. {pub.pages}</Text>
+              </View>
+            ))}
+          </View>
+        )}
 
-          {details.youtube_channel && details.youtube_channel.length > 0 && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>📺 YouTube Channels</Text>
-              {details.youtube_channel.map((channel, index) => (
-                <View key={index} style={styles.detailItem}>
-                  <Text style={styles.detailTitle}>{channel.name}</Text>
-                  <Text style={styles.detailText}>{channel.description}</Text>
-                </View>
-              ))}
-            </View>
-          )}
+        {details.youtube_channel && details.youtube_channel.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>📺 YouTube Channels</Text>
+            {details.youtube_channel.map((channel, index) => (
+              <View key={index} style={styles.detailItem}>
+                <Text style={styles.detailTitle}>{channel.name}</Text>
+                <Text style={styles.detailText}>{channel.description}</Text>
+              </View>
+            ))}
+          </View>
+        )}
 
-          {details.championships && details.championships.length > 0 && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>🏆 Championships</Text>
-              {details.championships.map((champ, index) => (
-                <View key={index} style={styles.detailItem}>
-                  <Text style={styles.detailTitle}>{champ.name} ({champ.year})</Text>
-                  <Text style={styles.detailText}>Position: {champ.position}</Text>
-                  <Text style={styles.detailText}>{champ.description}</Text>
-                </View>
-              ))}
-            </View>
-          )}
+        {details.championships && details.championships.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🏆 Championships</Text>
+            {details.championships.map((champ, index) => (
+              <View key={index} style={styles.detailItem}>
+                <Text style={styles.detailTitle}>{champ.name} ({champ.year})</Text>
+                <Text style={styles.detailText}>Position: {champ.position}</Text>
+                <Text style={styles.detailText}>{champ.description}</Text>
+              </View>
+            ))}
+          </View>
+        )}
 
-          {details.projects && details.projects.length > 0 && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>🌱 Projects</Text>
-              {details.projects.map((project, index) => (
-                <View key={index} style={styles.detailItem}>
-                  <Text style={styles.detailTitle}>{project.name} ({project.year})</Text>
-                  <Text style={styles.detailText}>{project.description}</Text>
-                </View>
-              ))}
-            </View>
-          )}
+        {details.projects && details.projects.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🌱 Projects</Text>
+            {details.projects.map((project, index) => (
+              <View key={index} style={styles.detailItem}>
+                <Text style={styles.detailTitle}>{project.name} ({project.year})</Text>
+                <Text style={styles.detailText}>{project.description}</Text>
+              </View>
+            ))}
+          </View>
+        )}
 
-          {details.performances && details.performances.length > 0 && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>🎭 Performances</Text>
-              {details.performances.map((perf, index) => (
-                <View key={index} style={styles.detailItem}>
-                  <Text style={styles.detailTitle}>{perf.name} ({perf.year})</Text>
-                  <Text style={styles.detailText}>{perf.description}</Text>
-                </View>
-              ))}
-            </View>
-          )}
-        </ScrollView>
-      )}
+        {details.performances && details.performances.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🎭 Performances</Text>
+            {details.performances.map((perf, index) => (
+              <View key={index} style={styles.detailItem}>
+                <Text style={styles.detailTitle}>{perf.name} ({perf.year})</Text>
+                <Text style={styles.detailText}>{perf.description}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 };
@@ -136,15 +128,7 @@ const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBad
   const badgeRadius = avatarSize * 0.5; // Distance from center of avatar
   const badgeSize = 40;
   
-  // Debug: Log profile achievements to see if details are loaded
-  console.log('Profile achievements:', profile.achievements.map(a => ({
-    name: a.name,
-    hasDetails: !!a.details,
-    detailsKeys: a.details ? Object.keys(a.details) : []
-  })));
-  
   const handleBadgePress = async (achievement: Achievement) => {
-    console.log('Badge pressed:', achievement.name, 'Has details:', !!achievement.details);
     setSelectedAchievement(achievement);
     
     // Call the appropriate grade fetching function
@@ -164,11 +148,6 @@ const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBad
       setFetchingMessage(null);
     }, 3000);
   };
-  
-  // Debug: Log selectedAchievement
-  if (selectedAchievement) {
-    console.log('Rendering selectedAchievement:', selectedAchievement.name, 'Has details:', !!selectedAchievement.details);
-  }
   
   return (
     <View style={styles.card}>
@@ -213,8 +192,9 @@ const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBad
         <View style={styles.achievementInfo}>
           <Text style={styles.achievementName}>{selectedAchievement.name}</Text>
           <Text style={styles.achievementDescription}>{selectedAchievement.description}</Text>
-          {/* Always show AchievementDetailsView for testing */}
-          <AchievementDetailsView details={selectedAchievement.details || {}} />
+          {selectedAchievement.details && (
+            <AchievementDetailsView details={selectedAchievement.details} />
+          )}
         </View>
       )}
       {fetchingMessage && (
@@ -226,6 +206,7 @@ const Card = ({ profile, achievementBadges }: { profile: Profile; achievementBad
 
 export default function HomeScreen() {
   const { profiles, achievementBadges, loading, error } = useProfiles();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   if (loading) {
     return (
@@ -251,21 +232,33 @@ export default function HomeScreen() {
     );
   }
 
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : profiles.length - 1));
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev < profiles.length - 1 ? prev + 1 : 0));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Swiper
-        cards={profiles}
-        renderCard={(card) => <Card profile={card} achievementBadges={achievementBadges} />}
-        stackSize={3}
-        backgroundColor={'#1a1a1a'}
-        cardVerticalMargin={60}
-        cardHorizontalMargin={10}
-        stackSeparation={15}
-        infinite
-        horizontalSwipe={true}
-        verticalSwipe={false}
-        swipeAnimationDuration={300}
-      />
+      <View style={styles.cardContainer}>
+        <Card profile={profiles[currentIndex]} achievementBadges={achievementBadges} />
+      </View>
+      
+      <View style={styles.navigationContainer}>
+        <TouchableOpacity style={styles.navButton} onPress={goToPrevious}>
+          <Text style={styles.navButtonText}>← Previous</Text>
+        </TouchableOpacity>
+        
+        <Text style={styles.counterText}>
+          {currentIndex + 1} / {profiles.length}
+        </Text>
+        
+        <TouchableOpacity style={styles.navButton} onPress={goToNext}>
+          <Text style={styles.navButtonText}>Next →</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -280,7 +273,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
-    height: '75%',
+    width: '100%',
+    height: '100%',
   },
   avatarContainer: {
     position: 'relative',
@@ -326,6 +320,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
     alignItems: 'center',
     paddingHorizontal: 20,
+    flex: 1,
+    width: '100%',
   },
   achievementName: {
     color: '#fff',
@@ -339,6 +335,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 22,
     opacity: 0.9,
+    marginBottom: 10,
   },
   fetchingMessage: {
     color: '#FFD700',
@@ -363,9 +360,8 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   detailsContainer: {
-    marginTop: 10,
     width: '100%',
-    maxHeight: 300,
+    marginTop: 10,
   },
   section: {
     marginBottom: 20,
@@ -393,5 +389,36 @@ const styles = StyleSheet.create({
     color: '#ccc',
     fontSize: 16,
     marginBottom: 3,
+  },
+  navigationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    backgroundColor: '#2a2a2a',
+    borderTopWidth: 1,
+    borderTopColor: '#3a3a3a',
+  },
+  navButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    backgroundColor: '#3a3a3a',
+    borderRadius: 8,
+  },
+  navButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  counterText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  cardContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
 });

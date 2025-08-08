@@ -1,112 +1,116 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { type AchievementDetails } from '../utils/dataLoader';
+import React from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 interface AchievementDetailsViewProps {
-  details: AchievementDetails;
+  details: any[]; // Using any for now since the data structure differs from the type definition
 }
 
-export const AchievementDetailsView: React.FC<AchievementDetailsViewProps> = ({ details }) => {
-  if (!details) return null;
+export const AchievementDetailsView: React.FC<AchievementDetailsViewProps> = ({
+  details,
+}) => {
+  if (!details || !Array.isArray(details)) return null;
 
   return (
     <View style={styles.detailsContainer}>
-      <ScrollView 
+      <ScrollView
         style={{ maxHeight: 200 }}
         showsVerticalScrollIndicator={true}
-      >
-        {details.diploma && details.diploma.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>🎓 Education</Text>
-            {details.diploma.map((diploma, index) => (
-              <View key={index} style={styles.detailItem}>
-                <Text style={styles.detailTitle}>{diploma.degree}</Text>
-                <Text style={styles.detailText}>{diploma.institution} ({diploma.year})</Text>
-                <Text style={styles.detailText}>Major: {diploma.major}</Text>
-                <Text style={styles.detailText}>GPA: {diploma.gpa}</Text>
-                {diploma.honors && <Text style={styles.detailText}>Honors: {diploma.honors}</Text>}
-                {diploma.awards && <Text style={styles.detailText}>Awards: {diploma.awards}</Text>}
+      >        
+        {/* Education/Diploma */}
+        {details.map((detail, detailIndex) => {
+          // Handle diploma/education (first item in array)
+          if (detailIndex === 0 && detail.diploma) {
+            return (
+              <View key={detailIndex} style={styles.section}>
+                <Text style={styles.sectionTitle}>🎓 Education</Text>
+                <View style={styles.detailItem}>
+                  <Text style={styles.detailTitle}>{detail.degree}</Text>
+                  <Text style={styles.detailText}>
+                    {detail.institution} ({detail.year})
+                  </Text>
+                  <Text style={styles.detailText}>Major: {detail.major}</Text>
+                  <Text style={styles.detailText}>GPA: {detail.gpa}</Text>
+                  {detail.honors && (
+                    <Text style={styles.detailText}>
+                      Honors: {detail.honors}
+                    </Text>
+                  )}
+                  {detail.awards && (
+                    <Text style={styles.detailText}>
+                      Awards: {detail.awards}
+                    </Text>
+                  )}
+                </View>
               </View>
-            ))}
-          </View>
-        )}
+            );
+          }
+          
+          // Handle postgraduate (second item in array)
+          if (detailIndex === 1 && detail.postgraduate && Array.isArray(detail.postgraduate)) {
+            return (
+              <View key={detailIndex} style={styles.section}>
+                <Text style={styles.sectionTitle}>🎓 Postgraduate Education</Text>
+                {detail.postgraduate.map((diploma: any, index: number) => (
+                  <View key={index} style={styles.detailItem}>
+                    <Text style={styles.detailTitle}>{diploma.degree}</Text>
+                    <Text style={styles.detailText}>
+                      {diploma.institution} ({diploma.year})
+                    </Text>
+                    <Text style={styles.detailText}>Major: {diploma.major}</Text>
+                    <Text style={styles.detailText}>GPA: {diploma.gpa}</Text>
+                    {diploma.honors && (
+                      <Text style={styles.detailText}>
+                        Honors: {diploma.honors}
+                      </Text>
+                    )}
+                  </View>
+                ))}
+              </View>
+            );
+          }
+          
+          // Handle publications (third item in array)
+          if (detailIndex === 2 && detail.publications && Array.isArray(detail.publications)) {
+            return (
+              <View key={detailIndex} style={styles.section}>
+                <Text style={styles.sectionTitle}>📚 Publications</Text>
+                {detail.publications.map((pub: any, index: number) => (
+                  <View key={index} style={styles.detailItem}>
+                    <Text style={styles.detailTitle}>{pub.title}</Text>
+                    <Text style={styles.detailText}>
+                      {pub.journal} ({pub.year})
+                    </Text>
+                    <Text style={styles.detailText}>
+                      Vol. {pub.volume}, Issue {pub.issue}, pp. {pub.pages}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            );
+          }
+          
+          return null;
+        })}
 
-        {details.postgraduate && details.postgraduate.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>🎓 Postgraduate Education</Text>
-            {details.postgraduate.map((diploma, index) => (
-              <View key={index} style={styles.detailItem}>
-                <Text style={styles.detailTitle}>{diploma.degree}</Text>
-                <Text style={styles.detailText}>{diploma.institution} ({diploma.year})</Text>
-                <Text style={styles.detailText}>Major: {diploma.major}</Text>
-                <Text style={styles.detailText}>GPA: {diploma.gpa}</Text>
-                {diploma.honors && <Text style={styles.detailText}>Honors: {diploma.honors}</Text>}
+        {/* Continue with remaining sections */}
+        {details.map((detail, detailIndex) => {
+          // Handle YouTube channels (fourth item in array)
+          if (detailIndex === 3 && detail.youtube_channel && Array.isArray(detail.youtube_channel)) {
+            return (
+              <View key={detailIndex} style={styles.section}>
+                <Text style={styles.sectionTitle}>📺 YouTube Channels</Text>
+                {detail.youtube_channel.map((channel: any, index: number) => (
+                  <View key={index} style={styles.detailItem}>
+                    <Text style={styles.detailTitle}>{channel.name}</Text>
+                    <Text style={styles.detailText}>{channel.description}</Text>
+                  </View>
+                ))}
               </View>
-            ))}
-          </View>
-        )}
-
-        {details.publications && details.publications.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>📚 Publications</Text>
-            {details.publications.map((pub, index) => (
-              <View key={index} style={styles.detailItem}>
-                <Text style={styles.detailTitle}>{pub.title}</Text>
-                <Text style={styles.detailText}>{pub.journal} ({pub.year})</Text>
-                <Text style={styles.detailText}>Vol. {pub.volume}, Issue {pub.issue}, pp. {pub.pages}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-
-        {details.youtube_channel && details.youtube_channel.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>📺 YouTube Channels</Text>
-            {details.youtube_channel.map((channel, index) => (
-              <View key={index} style={styles.detailItem}>
-                <Text style={styles.detailTitle}>{channel.name}</Text>
-                <Text style={styles.detailText}>{channel.description}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-
-        {details.championships && details.championships.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>🏆 Championships</Text>
-            {details.championships.map((champ, index) => (
-              <View key={index} style={styles.detailItem}>
-                <Text style={styles.detailTitle}>{champ.name} ({champ.year})</Text>
-                <Text style={styles.detailText}>Position: {champ.position}</Text>
-                <Text style={styles.detailText}>{champ.description}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-
-        {details.projects && details.projects.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>🌱 Projects</Text>
-            {details.projects.map((project, index) => (
-              <View key={index} style={styles.detailItem}>
-                <Text style={styles.detailTitle}>{project.name} ({project.year})</Text>
-                <Text style={styles.detailText}>{project.description}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-
-        {details.performances && details.performances.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>🎭 Performances</Text>
-            {details.performances.map((perf, index) => (
-              <View key={index} style={styles.detailItem}>
-                <Text style={styles.detailTitle}>{perf.name} ({perf.year})</Text>
-                <Text style={styles.detailText}>{perf.description}</Text>
-              </View>
-            ))}
-          </View>
-        )}
+            );
+          }
+          
+          return null;
+        })}
       </ScrollView>
     </View>
   );
@@ -114,7 +118,7 @@ export const AchievementDetailsView: React.FC<AchievementDetailsViewProps> = ({ 
 
 const styles = StyleSheet.create({
   detailsContainer: {
-    width: '100%',
+    width: "100%",
     marginTop: 10,
   },
   section: {
@@ -122,25 +126,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   sectionTitle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   detailItem: {
-    backgroundColor: '#3a3a3a',
+    backgroundColor: "#3a3a3a",
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
   },
   detailTitle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   detailText: {
-    color: '#ccc',
+    color: "#ccc",
     fontSize: 16,
     marginBottom: 3,
   },

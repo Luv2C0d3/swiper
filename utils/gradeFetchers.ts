@@ -8,7 +8,7 @@ export interface GradeFetchResult {
 
 // Stub functions for grade fetching with custom messages
 export const fetchEconomyGrade = (id: string): Promise<GradeFetchResult> => {
-  console.log(`fetching 'economy' grade for profile with id '${id}'`);
+  console.log(`Obtendo nota de 'economy' para o perfil com id '${id}'`);
   return Promise.resolve({
     grade: 7,
     message: "Buscando dados da Universidade de Kualung"
@@ -16,7 +16,7 @@ export const fetchEconomyGrade = (id: string): Promise<GradeFetchResult> => {
 };
 
 export const fetchSportsGrade = (id: string): Promise<GradeFetchResult> => {
-  console.log(`fetching 'sports' grade for profile with id '${id}'`);
+  console.log(`Obtendo nota de 'sports' para o perfil com id '${id}'`);
   return Promise.resolve({
     grade: 8,
     message: "Buscando critérios de avaliação do Colégio Tutulum"
@@ -24,7 +24,7 @@ export const fetchSportsGrade = (id: string): Promise<GradeFetchResult> => {
 };
 
 export const fetchGardeningGrade = (id: string): Promise<GradeFetchResult> => {
-  console.log(`fetching 'gardening' grade for profile with id '${id}'`);
+  console.log(`Obtendo nota de 'gardening' para o perfil com id '${id}'`);
   return Promise.resolve({
     grade: 6,
     message: "Buscando dados de horticultura do Instituto Green Thumb"
@@ -32,7 +32,7 @@ export const fetchGardeningGrade = (id: string): Promise<GradeFetchResult> => {
 };
 
 export const fetchMarketingGrade = (id: string): Promise<GradeFetchResult> => {
-  console.log(`fetching 'marketing' grade for profile with id '${id}'`);
+  console.log(`Obtendo nota de 'marketing' para o perfil com id '${id}'`);
   return Promise.resolve({
     grade: 9,
     message: "Buscando métricas de campanha da Academia de Marketing Digital"
@@ -40,7 +40,7 @@ export const fetchMarketingGrade = (id: string): Promise<GradeFetchResult> => {
 };
 
 export const fetchArtsGrade = (id: string): Promise<GradeFetchResult> => {
-  console.log(`fetching 'arts' grade for profile with id '${id}'`);
+  console.log(`Obtendo nota de 'arts' para o perfil com id '${id}'`);
   return Promise.resolve({
     grade: 7,
     message: "Buscando análise de portfólio da Universidade de Artes Criativas"

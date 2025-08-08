@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import {
   type Achievement,
@@ -26,6 +26,12 @@ export const Card: React.FC<CardProps> = ({ profile, achievementBadges }) => {
   const [selectedAchievement, setSelectedAchievement] =
     useState<Achievement | null>(null);
   const [fetchingMessage, setFetchingMessage] = useState<string | null>(null);
+
+  // Reset selectedAchievement when profile changes
+  useEffect(() => {
+    setSelectedAchievement(null);
+    setFetchingMessage(null);
+  }, [profile.id]);
 
   // Size of the main profile avatar image (60% of screen width)
   const avatarSize = width * 0.6;
